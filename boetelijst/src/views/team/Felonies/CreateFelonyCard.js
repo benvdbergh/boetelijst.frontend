@@ -87,7 +87,7 @@ const FelonyCard = () => {
         <Grid container direction="column" spacing={2}> {/* Added spacing attribute */}
           <Grid item >
             <Grid container alignItems="center" spacing={2} justifyContent="space-between"> {/* Adjusted justifyContent to alignItems and added spacing attribute */}
-              <Grid item onClick={() => handleExpandClick(true)}>
+              <Grid item onClick={() => handleExpandClick(!expanded)}>
                 <Grid container alignItems="center">
                   <Grid item>
                     <Avatar
@@ -103,7 +103,7 @@ const FelonyCard = () => {
                     </Avatar>
                   </Grid>
                   <Grid item>
-                    <Typography variant="h5" sx={{ color: '#fff', ml: 2 }}>New Felony</Typography> {/* Added margin to the left */}
+                    <Typography variant="h4" sx={{ color: '#fff', ml: 2, mt: 1 }}>New Felony</Typography> {/* Added margin to the left */}
                   </Grid>
                 </Grid>
               </Grid>
@@ -112,7 +112,7 @@ const FelonyCard = () => {
                   onClick={() => handleExpandClick(!expanded)} // Wrapped handleExpandClick in an arrow function and toggled expanded state
                   aria-expanded={expanded}
                   aria-label="show more"
-                  sx={{ position: 'absolute', top: theme.spacing(2), right: theme.spacing(2) }} // Positioned the icon on top of the circle
+                  sx={{ position: 'absolute', top: theme.spacing(3), right: theme.spacing(2) }} // Positioned the icon on top of the circle
                 >
                   <ExpandMoreIcon style={{ transform: expanded ? 'rotate(180deg)' : 'none' }} /> {/* Rotate the icon when expanded */}
                 </IconButton>
