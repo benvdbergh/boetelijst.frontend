@@ -1,22 +1,30 @@
 // assets
-import { IconDashboard } from '@tabler/icons';
+import { IconDashboard, IconBrandAsana } from '@tabler/icons';
 
 // constant
-const icons = { IconDashboard };
+const icons = { IconDashboard, IconBrandAsana };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const dashboard = {
   id: 'dashboard',
-  title: 'Dashboard',
+  title: 'Index',
   type: 'group',
   children: [
     {
       id: 'default',
       title: 'Dashboard',
       type: 'item',
-      url: '/dashboard/default',
+      url: '/index/dashboard',
       icon: icons.IconDashboard,
+      breadcrumbs: false
+    },
+    {
+      id: 'teams',
+      title: 'Teams',
+      type: 'item',
+      url: '/index/teams',
+      icon: icons.IconBrandAsana,
       breadcrumbs: false
     }
   ]
