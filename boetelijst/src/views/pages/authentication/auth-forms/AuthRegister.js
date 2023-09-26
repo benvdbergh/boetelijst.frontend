@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector} from 'react-redux';
+// import googleAuthenticationAction from '../GoogleAuthAction';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -35,7 +36,8 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
+// import { useGoogleOneTapLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
 const FirebaseRegister = ({ ...others }) => {
@@ -49,9 +51,12 @@ const FirebaseRegister = ({ ...others }) => {
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
 
-  const googleHandler = async () => {
-    console.error('Register');
-  };
+  
+
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => console.log(tokenResponse),
+    onError: error => console.log(error)
+  });
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -79,7 +84,7 @@ const FirebaseRegister = ({ ...others }) => {
             <Button
               variant="outlined"
               fullWidth
-              onClick={googleHandler}
+              onClick={login}
               size="large"
               sx={{
                 color: 'grey.700',

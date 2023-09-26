@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector} from 'react-redux';
+
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -34,6 +35,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from 'assets/images/icons/social-google.svg';
+import { useGoogleLogin } from '@react-oauth/google';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -44,9 +46,11 @@ const FirebaseLogin = ({ ...others }) => {
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
 
-  const googleHandler = async () => {
-    console.error('Login');
-  };
+  // const dispatch = useDispatch();
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => console.log(tokenResponse),
+    onError: error => console.log(error)
+  });
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -65,7 +69,7 @@ const FirebaseLogin = ({ ...others }) => {
             <Button
               disableElevation
               fullWidth
-              onClick={googleHandler}
+              onClick={login}
               size="large"
               variant="outlined"
               sx={{

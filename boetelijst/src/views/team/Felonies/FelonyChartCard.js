@@ -18,7 +18,7 @@ import { gridSpacing } from 'store/constant';
 
 // chart data
 import chartData from './chart-data/felonies-over-time-chart';
-
+import { useQuery } from 'react-query';
 // const status = [
 //   {
 //     value: 'week',
@@ -36,6 +36,13 @@ import chartData from './chart-data/felonies-over-time-chart';
 
 // ==============================|| FELONIES OVER TIME CHART ||============================== //
 
+const fetchFelonies = async () => {
+  const response = await fetch('http://localhost:8000/api/felony');
+  const data = await response.json();
+  return data;
+};
+
+
 const FeloniesOverTimeChart = ({ isLoading }) => {
   // const [value, setValue] = useState('week');
   const [showTable, setShowTable] = useState(false);
@@ -52,6 +59,8 @@ const FeloniesOverTimeChart = ({ isLoading }) => {
   const primaryDark = theme.palette.primary.dark;
   const secondaryMain = theme.palette.secondary.main;
   const secondaryLight = theme.palette.secondary.light;
+
+  const { felonies, dataLoading, isError } = useQuery('felonies', fetchFelonies);
 
   useEffect(() => {
     const newChartData = {
@@ -87,8 +96,17 @@ const FeloniesOverTimeChart = ({ isLoading }) => {
     // do not load chart when loading
     if (!isLoading) {
       ApexCharts.exec(`bar-chart`, 'updateOptions', newChartData);
+      console.log(felonies);
     }
   }, [navType, primary200, primaryDark, secondaryMain, secondaryLight, primary, darkLight, grey200, isLoading, grey500]);
+
+  if (dataLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching felonies</div>;
+  }
 
   return (
     <>
