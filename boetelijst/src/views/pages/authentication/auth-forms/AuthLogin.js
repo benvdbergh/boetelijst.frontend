@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 // material-ui
@@ -36,6 +36,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from 'assets/images/icons/social-google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
+import useToken from 'hooks/useToken';
+import { useAuth } from 'utils/authContext';
+import { useNavigate } from 'react-router-dom';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -45,10 +48,19 @@ const FirebaseLogin = ({ ...others }) => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
-
+  const { loginUser } = useAuth();
+  const { setToken } = useToken();
+  const navigate = useNavigate();
   // const dispatch = useDispatch();
+  
   const login = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
+    onSuccess: tokenResponse => {
+      console.log(tokenResponse)
+      // Cookies.set('accessToken', tokenResponse.access_token, { secure: true, sameSite: 'strict' });
+      setToken(tokenResponse.access_token)
+      loginUser();
+      navigate('/');
+    },
     onError: error => console.log(error)
   });
 

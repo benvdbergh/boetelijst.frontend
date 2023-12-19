@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import ApiInstance from 'utils/axiosInstance';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -36,10 +37,10 @@ import { useQuery } from 'react-query';
 
 // ==============================|| FELONIES OVER TIME CHART ||============================== //
 
+
 const fetchFelonies = async () => {
-  const response = await fetch('http://localhost:8000/api/felony');
-  const data = await response.json();
-  return data;
+  const response = await ApiInstance.get('/felony');
+  return response.data;
 };
 
 

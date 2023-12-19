@@ -38,6 +38,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // import { useGoogleOneTapLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
 const FirebaseRegister = ({ ...others }) => {
@@ -45,6 +46,8 @@ const FirebaseRegister = ({ ...others }) => {
   const scriptedRef = useScriptRef();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
+  const [user, setUser] = useState([]);
+  const [profile, setProfile] = useState([])
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(true);
 
@@ -54,8 +57,11 @@ const FirebaseRegister = ({ ...others }) => {
   
 
   const login = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
-    onError: error => console.log(error)
+    onSuccess: tokenResponse => { 
+      console.log(tokenResponse)
+      setUser(tokenResponse)
+     },
+    onError: error => console.log('Google Oauth Failed: ', error)
   });
 
   const handleClickShowPassword = () => {
@@ -74,7 +80,38 @@ const FirebaseRegister = ({ ...others }) => {
 
   useEffect(() => {
     changePassword('123456');
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+          headers: {
+            Authorization: `Bearer ${user.access_token}`,
+            Accept: 'application/json'
+          }
+        })
+        .then((res) => {
+          setProfile(res.data)
+          /* 
+            {
+              email: "sting",
+              family_name: "string",
+              givne_name: "string",
+              name: "string"
+              id: "string" -> number
+              locale: "nl"
+              picture: "http link"
+              veirfied_email: true
+            }
+          */
+          console.log(`Welcome `, profile)
+        })
+      .catch((err) => console.log(err))
+    }
+    },
+    [user]
+  );
 
   return (
     <>
