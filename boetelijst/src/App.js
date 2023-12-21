@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { AuthProvider } from 'utils/authContext';
+import { AuthProvider } from 'hooks/useAuth';
 
 // routing
 import Routes from 'routes';

@@ -1,6 +1,6 @@
 // axiosInstance.js
 import axios from 'axios';
-import useToken from 'hooks/useToken';
+import { useAuth } from 'hooks/useAuth';
 
 const ApiInstance = axios.create({
 	baseURL: 'http://localhost:8000/api/',
@@ -17,7 +17,7 @@ const setAuthorizationHeader = (config, token) => {
 // Add a request interceptor
 ApiInstance.interceptors.request.use(
 	(config) => {
-		const { token } = useToken(); // Call the useToken hook within the request interceptor
+		const { token } = useAuth(); // Call the useToken hook within the request interceptor
 		return setAuthorizationHeader(config, token);
 	},
 	(error) => {

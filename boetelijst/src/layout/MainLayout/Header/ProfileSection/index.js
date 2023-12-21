@@ -38,8 +38,7 @@ import User1 from 'assets/images/users/user-round.svg';
 
 // assets
 import { IconLogout, /* IconSearch, */ IconSettings, IconUser } from '@tabler/icons';
-import { useAuth } from 'utils/authContext';
-import useToken from 'hooks/useToken';
+import { useAuth } from 'hooks/useAuth';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -49,7 +48,6 @@ const ProfileSection = () => {
   // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { isLoggedIn, logoutUser } = useAuth();
 
-  const { setToken } = useToken();
   const navigate = useNavigate();
 
   // const [sdm, setSdm] = useState(true);
@@ -63,7 +61,6 @@ const ProfileSection = () => {
   const anchorRef = useRef(null);
 
   const handleLogout = async () => {
-    setToken('')
     logoutUser();
     console.log('Logout');
   };
