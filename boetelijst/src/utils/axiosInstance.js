@@ -1,11 +1,16 @@
 // axiosInstance.js
 import axios from 'axios';
-import { useAuth } from 'hooks/useAuth';
 
 const ApiInstance = axios.create({
 	baseURL: 'http://localhost:8000/api/',
 	timeout: 1000
 });
+
+const getToken = () => {
+	const tokenString = sessionStorage.getItem('token');
+	const userToken = JSON.parse(tokenString);
+	return userToken?.token
+};
 
 const setAuthorizationHeader = (config, token) => {
 	if (token) {
@@ -17,7 +22,7 @@ const setAuthorizationHeader = (config, token) => {
 // Add a request interceptor
 ApiInstance.interceptors.request.use(
 	(config) => {
-		const { token } = useAuth(); // Call the useToken hook within the request interceptor
+		const token = getToken(); // Call the useToken hook within the request interceptor
 		return setAuthorizationHeader(config, token);
 	},
 	(error) => {

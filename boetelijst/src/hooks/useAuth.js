@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
 		return localStorage.getItem('isLoggedIn') === 'true';
 	});
 
-
 	const getToken = () => {
 		const tokenString = sessionStorage.getItem('token');
 		const userToken = JSON.parse(tokenString);
